@@ -184,13 +184,13 @@
                                     <asp:BoundField DataField="documento" HeaderText="Nº Doc." SortExpression="documento" />               
                                     <asp:BoundField DataField="cliente" HeaderText="Cliente" SortExpression="cliente" />                                                         
                                     <asp:BoundField DataField="dataemissao" HeaderText="Emissão" SortExpression="dataemissao" DataFormatString="{0:dd/MM/yyyy}" />                                    
-                                    <asp:TemplateField HeaderText="Alterar" HeaderStyle-Width="50px">
+                                    <asp:TemplateField HeaderText="Alterar">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"
                                                 CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:TemplateField>       
-                                    <asp:TemplateField HeaderText="Visualizar" HeaderStyle-Width="50px">
+                                    <asp:TemplateField HeaderText="Visualizar">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="btnVisualizar" runat="server" CssClass="glyphicon glyphicon-print" CommandName="Visualizar"
                                                 CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
