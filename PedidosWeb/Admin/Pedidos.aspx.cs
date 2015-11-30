@@ -19,11 +19,11 @@ namespace PedidosWeb.Admin
         {
             List<Pedido> Pedidos = new List<Pedido>();
 
-            Pedidos.Add(new Pedido { ID = 1, Cliente = "Cliente 1", DataEmissao = DateTime.Parse("01/05/2015"), Documento = "254863" });
-            Pedidos.Add(new Pedido { ID = 2, Cliente = "Cliente 2", DataEmissao = DateTime.Parse("23/07/2015"), Documento = "878934" });
-            Pedidos.Add(new Pedido { ID = 3, Cliente = "Cliente 3", DataEmissao = DateTime.Parse("05/03/2015"), Documento = "458731" });
-            Pedidos.Add(new Pedido { ID = 4, Cliente = "Cliente 4", DataEmissao = DateTime.Parse("12/04/2015"), Documento = "155879" });
-            Pedidos.Add(new Pedido { ID = 5, Cliente = "Cliente 5", DataEmissao = DateTime.Parse("21/06/2015"), Documento = "365248" });
+            Pedidos.Add(new Pedido { ID = 1, Cliente = "Cliente 1", DataEmissao = DateTime.Parse(string.Format("{0:dd/MM/yyyy}", "01/05/2015")), Documento = "254863" });
+            Pedidos.Add(new Pedido { ID = 2, Cliente = "Cliente 2", DataEmissao = DateTime.Parse(string.Format("{0:dd/MM/yyyy}", "23/07/2015")), Documento = "878934" });
+            Pedidos.Add(new Pedido { ID = 3, Cliente = "Cliente 3", DataEmissao = DateTime.Parse(string.Format("{0:dd/MM/yyyy}", "05/03/2015")), Documento = "458731" });
+            Pedidos.Add(new Pedido { ID = 4, Cliente = "Cliente 4", DataEmissao = DateTime.Parse(string.Format("{0:dd/MM/yyyy}", "12/04/2015")), Documento = "155879" });
+            Pedidos.Add(new Pedido { ID = 5, Cliente = "Cliente 5", DataEmissao = DateTime.Parse(string.Format("{0:dd/MM/yyyy}", "21/06/2015")), Documento = "365248" });
 
             gvProdutos.DataSource = Pedidos;
             gvProdutos.DataBind();
