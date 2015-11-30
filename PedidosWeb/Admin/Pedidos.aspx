@@ -161,7 +161,7 @@
                         <nav class="navbar navbar-default">
                             <div class="container-fluid">
                                 <div class="navbar-header">
-                                    <p class="navbar-brand">Filtro</p>
+                                    <p class="navbar-brand">Fisltro</p>
                                 </div>
                                 <div class="navbar-form navbar-left">
                                     <div class="form-group">
