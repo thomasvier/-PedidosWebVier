@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="form-group col-xs-4">
                                 <label for="ddlCliente">Cliente</label>
                                 <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-control">
                                     <asp:ListItem Text="Selecione" Value="selecione" Selected="True"></asp:ListItem>
