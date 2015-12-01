@@ -71,6 +71,21 @@
         </div>
         <div class="container body-content">
             <br />
+            <div id="sucesso" class="alert alert-success divHidden">
+                <span class="glyphicon glyphicon-ok-sign"></span>
+                <label id="lblSucesso"></label>
+            </div>
+            <div id="erro" class="alert alert-danger divHidden">
+                <span class="glyphicon glyphicon-remove-sign"></span>
+                <label id="lblErro"></label>
+            </div>
+            <div id="info" class="alert alert-info divHidden">
+                <label id="lblInfo"></label>
+            </div>
+            <div id="warning" class="alert alert-warning divHidden">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                <label id="lblWarning"></label>
+            </div>
             <asp:UpdateProgress ID="upErp"
                 runat="server">
                 <ProgressTemplate>

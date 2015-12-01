@@ -11,5 +11,7 @@ namespace PedidosWeb
         public string Documento { get; set; }
         public string Cliente { get; set; }
         public DateTime DataEmissao { get; set; }
+        public int Status { get; set; }
+        public int ClienteID { get; set; }
     }
 }

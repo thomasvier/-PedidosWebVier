@@ -1,25 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pedidos.aspx.cs" Inherits="PedidosWeb.Admin.Pedidos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <script>
-        $(document).ready(function (){        
-            $("#MainContent_txtPrecoProduto").maskMoney({ prefix: 'R$ ', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false });
-            $("#MainContent_txtQuantidadeProduto").mask("###0,0000", { reverse: true });
-            $("#MainContent_txtDataEmissao").mask('00/00/0000');
-            $("#MainContent_txtDataEntrega").mask('00/00/0000');
-            $("#MainContent_txtDataEntrega").datepicker();
-        });
-
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-
-        prm.add_endRequest(function () {
-            $(document).ready(function () {
-                $("#MainContent_txtPrecoProduto").maskMoney({ prefix: 'R$ ', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false });
-                $("#MainContent_txtQuantidadeProduto").mask("###0,0000", { reverse: true });
-                $("#MainContent_txtDataEmissao").mask('00/00/0000');
-                $("#MainContent_txtDataEntrega").mask('00/00/0000');
-            });
-        });
-    </script>    
+    <script src="Pedidos.js"></script>   
     <asp:Panel ID="pnCadastro" runat="server" CssClass="panel panel-default" DefaultButton="btnSalvar">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
@@ -88,7 +69,7 @@
                                 <div class="row">                                    
                                     <div class="col-md-3">
                                         <label for="ddlProdutos">Produto</label>
-                                        <asp:DropDownList ID="ddlProdutos" runat="server" CssClass="form-control">
+                                        <asp:DropDownList ID="ddlProdutos" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlProdutos_SelectedIndexChanged" AutoPostBack="true">
                                         </asp:DropDownList>
                                     </div>                                    
                                 </div>                                        
@@ -105,25 +86,29 @@
                                 <br />
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <asp:Button ID="btnProduto" runat="server" Text="Inserir" CssClass="btn btn-primary"  />
+                                        <asp:Button ID="btnProduto" runat="server" Text="Inserir" CssClass="btn btn-primary" OnClick="btnProduto_Click"  />
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-md-12">
                                         <asp:GridView ID="gvProdutos" runat="server" CssClass="table table-striped" AutoGenerateColumns="false" GridLines="None"
-                                            AllowSorting="true"
-                                            AllowPaging="true"
-                                            PageSize="20">
+                                            ShowHeaderWhenEmpty="true"                                            
+                                            OnRowCommand="gvProdutos_RowCommand">
                                             <Columns>               
-                                                <asp:BoundField DataField="cliente" HeaderText="Cliente" SortExpression="cliente" />                                                         
-                                                <asp:TemplateField HeaderText="Alterar" HeaderStyle-Width="50px">
+                                                <asp:BoundField DataField="ID" ItemStyle-CssClass="divHidden" HeaderStyle-CssClass="divHidden" />    
+                                                <asp:BoundField DataField="produtoID" ItemStyle-CssClass="divHidden" HeaderStyle-CssClass="divHidden" />    
+                                                <asp:BoundField DataField="descricao" HeaderText="Produto" SortExpression="descricao" />    
+                                                <asp:BoundField DataField="quantidade" HeaderText="Qtd." DataFormatString="{0:N3}" SortExpression="quantidade" />    
+                                                <asp:BoundField DataField="total" HeaderText="Total" DataFormatString="{0:C}" SortExpression="total" />                                                         
+                                                <asp:BoundField DataField="precounitario" HeaderStyle-CssClass="divHidden" ItemStyle-CssClass="divHidden" SortExpression="descricao" />    
+                                                <asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"
                                                             CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>       
-                                                <asp:TemplateField HeaderText="Remover" HeaderStyle-Width="50px">
+                                                <asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnRemover" runat="server" CssClass="glyphicon glyphicon-remove" CommandName="Remover"
                                                             CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
@@ -175,7 +160,7 @@
                             <asp:GridView ID="gvPedidos" runat="server" CssClass="table table-striped" AutoGenerateColumns="false" GridLines="None"
                                 AllowSorting="true"
                                 AllowPaging="true"
-                                PageSize="20"
+                                PageSize="10"
                                 OnSorting="gvPedidos_Sorting"
                                 OnPageIndexChanging="gvPedidos_PageIndexChanging"
                                 OnRowCommand="gvPedidos_RowCommand">
