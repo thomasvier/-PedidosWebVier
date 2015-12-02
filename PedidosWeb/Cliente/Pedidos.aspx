@@ -17,8 +17,6 @@
                             <div class="col-sm-4">
                                 <label for="txtDockumento">Documento</label>
                                 <asp:TextBox ID="txtDocumento" runat="server" Enabled="false" CssClass="form-control" MaxLenght="300"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="rfvNome" runat="server" Display="Dynamic" ControlToValidate="txtDocumento"
-                                    SetFocusOnError="true" ValidationGroup="vgPedido" CssClass="erro" Text="Número do documento obrigatório"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row">
@@ -45,62 +43,57 @@
                                 </h4>
                             </div>
                             <div id="produtos" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
-                                <div class="row">                                    
-                                    <div class="col-md-3">
-                                        <label for="ddlProdutos">Produto</label>
-                                        <asp:DropDownList ID="ddlProdutos" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlProdutos_SelectedIndexChanged" AutoPostBack="true">
-                                        </asp:DropDownList>
-                                    </div>                                    
-                                </div>                                        
-                                <div class="row">                                    
-                                    <div class="col-md-3">
-                                        <label for="txtQuantidadeProduto">Quantidade</label>
-                                        <asp:TextBox ID="txtQuantidadeProduto" runat="server" CssClass="form-control"></asp:TextBox>
+                                <div class="panel-body">
+                                    <div class="row">                                    
+                                        <div class="col-md-3">
+                                            <label for="ddlProdutos">Produto</label>
+                                            <asp:DropDownList ID="ddlProdutos" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlProdutos_SelectedIndexChanged" AutoPostBack="true">
+                                            </asp:DropDownList>
+                                        </div>                                    
+                                    </div>                                        
+                                    <div class="row">                                    
+                                        <div class="col-md-3">
+                                            <label for="txtQuantidadeProduto">Quantidade</label>
+                                            <asp:TextBox ID="txtQuantidadeProduto" runat="server" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="txtPrecoProduto">Preço</label>
+                                            <asp:TextBox ID="txtPrecoProduto" runat="server" Text="0,00" Enabled="false" CssClass="form-control"></asp:TextBox>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="txtPrecoProduto">Preço</label>
-                                        <asp:TextBox ID="txtPrecoProduto" runat="server" Text="0,00" Enabled="false" CssClass="form-control"></asp:TextBox>
-                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <asp:Button ID="btnProduto" runat="server" Text="Inserir" CssClass="btn btn-primary" OnClick="btnProduto_Click"  />
+                                        </div>
+                                    </div>                                
                                 </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <asp:Button ID="btnProduto" runat="server" Text="Inserir" CssClass="btn btn-primary" OnClick="btnProduto_Click"  />
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <asp:GridView ID="gvProdutos" runat="server" CssClass="table table-striped" AutoGenerateColumns="false" GridLines="None"
-                                            ShowHeaderWhenEmpty="true"                                            
-                                            OnRowCommand="gvProdutos_RowCommand">
-                                            <Columns>               
-                                                <asp:BoundField DataField="ID" ItemStyle-CssClass="divHidden" HeaderStyle-CssClass="divHidden" />    
-                                                <asp:BoundField DataField="produtoID" ItemStyle-CssClass="divHidden" HeaderStyle-CssClass="divHidden" />    
-                                                <asp:BoundField DataField="descricao" HeaderText="Produto" SortExpression="descricao" />    
-                                                <asp:BoundField DataField="quantidade" HeaderText="Qtd." DataFormatString="{0:N3}" SortExpression="quantidade" />    
-                                                <asp:BoundField DataField="total" HeaderText="Total" DataFormatString="{0:C}" SortExpression="total" />                                                         
-                                                <asp:BoundField DataField="precounitario" HeaderStyle-CssClass="divHidden" ItemStyle-CssClass="divHidden" SortExpression="descricao" />    
-                                                <asp:TemplateField>
-                                                    <ItemTemplate>
-                                                        <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"
-                                                            CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>       
-                                                <asp:TemplateField>
-                                                    <ItemTemplate>
-                                                        <asp:LinkButton ID="btnRemover" runat="server" CssClass="glyphicon glyphicon-remove" CommandName="Remover"
-                                                            CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>         
-                                            </Columns>
-                                            <pagersettings position="TopAndBottom"/>
-                                        </asp:GridView>
-                                    </div>    
-                                </div>                                  
+                                <asp:GridView ID="gvProdutos" runat="server" CssClass="table table-hover" AutoGenerateColumns="false" GridLines="None"
+                                    ShowHeaderWhenEmpty="true"                                            
+                                    OnRowCommand="gvProdutos_RowCommand">
+                                    <Columns>               
+                                        <asp:BoundField DataField="ID" ItemStyle-CssClass="divHidden" HeaderStyle-CssClass="divHidden" />    
+                                        <asp:BoundField DataField="produtoID" ItemStyle-CssClass="divHidden" HeaderStyle-CssClass="divHidden" />    
+                                        <asp:BoundField DataField="descricao" HeaderText="Produto" SortExpression="descricao" />    
+                                        <asp:BoundField DataField="quantidade" HeaderText="Qtd." DataFormatString="{0:N3}" SortExpression="quantidade" />    
+                                        <asp:BoundField DataField="total" HeaderText="Total" DataFormatString="{0:C}" SortExpression="total" />                                                         
+                                        <asp:BoundField DataField="precounitario" HeaderStyle-CssClass="divHidden" ItemStyle-CssClass="divHidden" SortExpression="descricao" />    
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"
+                                                    CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>       
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="btnRemover" runat="server" CssClass="glyphicon glyphicon-remove" CommandName="Remover"
+                                                    CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>         
+                                    </Columns>                                                                     
+                                    <pagersettings position="TopAndBottom"/>
+                                </asp:GridView>
                             </div>
-                                </div>
                         </asp:Panel>
                         <div class="form-group">
                             <asp:Button ID="btnSalvar" runat="server" Text="Salvar" CssClass="btn btn-primary" OnClick="btnSalvar_Click" ValidationGroup="vgPedido" />
@@ -156,39 +149,38 @@
                                 <br />
                                 <asp:Button ID="btnPesquisar" runat="server" Text="Pesquisar" ClientIDMode="Static" CssClass="btn btn-default" OnClick="btnPesquisar_Click" />                                                                               
                             </div>
-                        </div>                        
-                        <div class="form-group">
-                            <asp:GridView ID="gvPedidos" runat="server" CssClass="table table-striped" AutoGenerateColumns="false" GridLines="None"
-                                AllowSorting="true"
-                                AllowPaging="true"
-                                PageSize="10"
-                                OnPageIndexChanging="gvPedidos_PageIndexChanging"
-                                OnRowCommand="gvPedidos_RowCommand">
-                                <Columns>               
-                                    <asp:BoundField DataField="ID" HeaderText="Código" SortExpression="ID" DataFormatString="{0:000000}" />
-                                    <asp:BoundField DataField="documento" HeaderText="Nº Doc." SortExpression="documento" />               
-                                    <asp:BoundField DataField="cliente" HeaderText="Cliente" SortExpression="cliente" />                                                         
-                                    <asp:BoundField DataField="dataemissao" HeaderText="Emissão" SortExpression="dataemissao" DataFormatString="{0:dd/MM/yyyy}" />  
-                                    <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />                                    
-                                    <asp:TemplateField HeaderText="Alterar">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"
-                                                CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>       
-                                    <asp:TemplateField HeaderText="Visualizar">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="btnVisualizar" runat="server" CssClass="glyphicon glyphicon-print" CommandName="Visualizar"
-                                                CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>         
-                                </Columns>
-                                <pagersettings position="TopAndBottom"/>
-                            </asp:GridView>
-                        </div>
+                        </div>        
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
+            <asp:GridView ID="gvPedidos" runat="server" CssClass="table table-striped" AutoGenerateColumns="false" GridLines="None"
+                AllowSorting="true"
+                AllowPaging="true"
+                PageSize="10"
+                OnPageIndexChanging="gvPedidos_PageIndexChanging"
+                OnRowCommand="gvPedidos_RowCommand">
+                <Columns>               
+                    <asp:BoundField DataField="ID" HeaderText="Código" SortExpression="ID" DataFormatString="{0:000000}" />
+                    <asp:BoundField DataField="documento" HeaderText="Nº Doc." SortExpression="documento" />               
+                    <asp:BoundField DataField="cliente" HeaderText="Cliente" SortExpression="cliente" />                                                         
+                    <asp:BoundField DataField="dataemissao" HeaderText="Emissão" SortExpression="dataemissao" DataFormatString="{0:dd/MM/yyyy}" />  
+                    <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />                                    
+                    <asp:TemplateField HeaderText="Alterar">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"
+                                CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>       
+                    <asp:TemplateField HeaderText="Visualizar">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btnVisualizar" runat="server" CssClass="glyphicon glyphicon-print" CommandName="Visualizar"
+                                CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>         
+                </Columns>
+                <PagerStyle CssClass="pagination-ys" />   
+                <pagersettings position="TopAndBottom"/>
+            </asp:GridView>
         </div>
     </asp:Panel>
 </asp:Content>
