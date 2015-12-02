@@ -69,6 +69,15 @@ namespace PedidosWeb.Bll
             return Pedidos;
         }
 
+        public List<Pedido> RetornarPedidosCliente(int ClienteID)
+        {
+            List<Pedido> Pedidos = (from p in db
+                                    where p.ClienteID.Equals(ClienteID)
+                                    select p).ToList();
+
+            return Pedidos;
+        }
+
         public Pedido RetornaPedido(int ID)
         {
             Pedido Pedido = (from p in db

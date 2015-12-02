@@ -79,7 +79,16 @@ namespace PedidosWeb {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to A quantidade deve ser maior que zero..
+        /// </summary>
+        internal static string QuantidadeMaiorZero {
+            get {
+                return ResourceManager.GetString("QuantidadeMaiorZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecione um produto..
         /// </summary>
         internal static string SelecioneProduto {
             get {

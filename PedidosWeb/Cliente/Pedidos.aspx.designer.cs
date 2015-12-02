@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PedidosWeb.Admin {
+namespace PedidosWeb.Cliente {
     
     
     public partial class Pedidos {
@@ -31,13 +31,13 @@ namespace PedidosWeb.Admin {
         protected global::System.Web.UI.UpdatePanel upCadastro;
         
         /// <summary>
-        /// txtID control.
+        /// hfID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtID;
+        protected global::System.Web.UI.WebControls.HiddenField hfID;
         
         /// <summary>
         /// txtDocumento control.
@@ -56,24 +56,6 @@ namespace PedidosWeb.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNome;
-        
-        /// <summary>
-        /// ddlCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
-        
-        /// <summary>
-        /// txtDataEmissao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDataEmissao;
         
         /// <summary>
         /// txtDataEntrega control.
@@ -193,13 +175,13 @@ namespace PedidosWeb.Admin {
         protected global::System.Web.UI.UpdatePanel upPedidos;
         
         /// <summary>
-        /// TextBox1 control.
+        /// txtFiltro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtFiltro;
         
         /// <summary>
         /// txtDataInicialFiltro control.
@@ -218,15 +200,6 @@ namespace PedidosWeb.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDataFinalFiltro;
-        
-        /// <summary>
-        /// txtClienteFiltro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClienteFiltro;
         
         /// <summary>
         /// ddlStatusFiltro control.

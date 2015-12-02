@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pedidos.aspx.cs" Inherits="PedidosWeb.Admin.Pedidos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pedidos.aspx.cs" Inherits="PedidosWeb.Cliente.Pedidos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="Pedidos.js"></script>   
     <asp:Panel ID="pnCadastro" runat="server" CssClass="panel panel-default" DefaultButton="btnSalvar">
@@ -12,50 +12,30 @@
             <div class="panel-body">                
                 <asp:UpdatePanel ID="upCadastro" runat="server" UpdateMode="Always">                    
                     <ContentTemplate>   
+                        <asp:HiddenField ID="hfID" runat="server" />
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="txtID">Código</label>
-                                <asp:TextBox ID="txtID" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label for="txtDocumento">Documento</label>
-                                <asp:TextBox ID="txtDocumento" runat="server" CssClass="form-control" MaxLenght="300"></asp:TextBox>
+                                <label for="txtDockumento">Documento</label>
+                                <asp:TextBox ID="txtDocumento" runat="server" Enabled="false" CssClass="form-control" MaxLenght="300"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="rfvNome" runat="server" Display="Dynamic" ControlToValidate="txtDocumento"
                                     SetFocusOnError="true" ValidationGroup="vgPedido" CssClass="erro" Text="Número do documento obrigatório"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-xs-4">
-                                <label for="ddlCliente">Cliente</label>
-                                <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-control">
-                                    <asp:ListItem Text="Selecione" Value="selecione" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Text="Teste" Value="Teste"></asp:ListItem>
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
-                                <label for="txtDataEmissao">Data emissão</label>
-                                <asp:TextBox ID="txtDataEmissao" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="txtDataEntrega">Data de Entrega</label>
+                                <label for="txtDataEntrega">Data de Entrega Desejada</label>
                                 <asp:TextBox ID="txtDataEntrega" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
-                        </div>     
-                        <div class="row">
                             <div class="col-sm-4">
                                 <label for="ddlStatus">Status</label>
-                                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control">
+                                <asp:DropDownList ID="ddlStatus" runat="server" Enabled="false" CssClass="form-control">
                                     <asp:ListItem Selected="True" Value="0" Text="Pendente"></asp:ListItem>
                                     <asp:ListItem Value="1" Text="Confirmado"></asp:ListItem>
                                     <asp:ListItem Value="2" Text="Entregue"></asp:ListItem>
                                     <asp:ListItem Value="3" Text="Cancelado"></asp:ListItem>
                                 </asp:DropDownList>
                             </div>
-                        </div>             
+                        </div>                             
                         <br />
                         <asp:Panel ID="pnProdutos" runat="server" CssClass="panel panel-primary" DefaultButton="btnProduto">
                             <div class="panel-heading" role="tab" id="headingProd">
@@ -80,7 +60,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="txtPrecoProduto">Preço</label>
-                                        <asp:TextBox ID="txtPrecoProduto" runat="server" Text="0,00" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox ID="txtPrecoProduto" runat="server" Text="0,00" Enabled="false" CssClass="form-control"></asp:TextBox>
                                     </div>
                                 </div>
                                 <br />
@@ -135,7 +115,7 @@
     <asp:Panel ID="pnPedidos" runat="server" DefaultButton="btnPesquisar" CssClass="panel panel-default">    
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#pedidos" aria-expanded="true" aria-controls="pedidos">Pedidos
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#pedidos" aria-expanded="true" aria-controls="pedidos">Meus Pedidos
                 </a>
             </h4>
         </div>
@@ -148,8 +128,10 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label for="txtFiltro">Código/Documento</label>
-                                        <asp:TextBox ID="TextBox1" runat="server" CausesValidation="false" CssClass="form-control input-sm" placeholder="Código/Documento"></asp:TextBox>
+                                        <asp:TextBox ID="txtFiltro" runat="server" CausesValidation="false" CssClass="form-control input-sm" placeholder="Código/Documento"></asp:TextBox>
                                     </div>
+                                </div>                                
+                                <div class="row">
                                     <div class="col-md-3">
                                         <label for="txtDataInicialFiltro">De: </label>
                                         <asp:TextBox ID="txtDataInicialFiltro" runat="server" CausesValidation="false" CssClass="form-control input-sm" placeholder="Data inicial"></asp:TextBox>
@@ -158,12 +140,8 @@
                                         <label for="txtDataFinalFiltro">Até: </label>
                                         <asp:TextBox ID="txtDataFinalFiltro" runat="server" CausesValidation="false" CssClass="form-control input-sm" placeholder="Data final"></asp:TextBox>
                                     </div>
-                                </div>                                
+                                </div>   
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="txtClienteFiltro">Cliente</label>
-                                        <asp:TextBox ID="txtClienteFiltro" runat="server" CssClass="form-control input-sm" placeholder="Cliente"></asp:TextBox>
-                                    </div>
                                     <div class="col-md-3">
                                         <label for="ddlStatusFiltro">Status</label>
                                         <asp:DropDownList ID="ddlStatusFiltro" runat="server" CssClass="form-control input-sm">
@@ -174,7 +152,7 @@
                                             <asp:ListItem Value="3" Text="Cancelado"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
-                                </div>   
+                                </div>                 
                                 <br />
                                 <asp:Button ID="btnPesquisar" runat="server" Text="Pesquisar" ClientIDMode="Static" CssClass="btn btn-default" OnClick="btnPesquisar_Click" />                                                                               
                             </div>
@@ -184,14 +162,14 @@
                                 AllowSorting="true"
                                 AllowPaging="true"
                                 PageSize="10"
-                                OnSorting="gvPedidos_Sorting"
                                 OnPageIndexChanging="gvPedidos_PageIndexChanging"
                                 OnRowCommand="gvPedidos_RowCommand">
                                 <Columns>               
                                     <asp:BoundField DataField="ID" HeaderText="Código" SortExpression="ID" DataFormatString="{0:000000}" />
                                     <asp:BoundField DataField="documento" HeaderText="Nº Doc." SortExpression="documento" />               
                                     <asp:BoundField DataField="cliente" HeaderText="Cliente" SortExpression="cliente" />                                                         
-                                    <asp:BoundField DataField="dataemissao" HeaderText="Emissão" SortExpression="dataemissao" DataFormatString="{0:dd/MM/yyyy}" />                                    
+                                    <asp:BoundField DataField="dataemissao" HeaderText="Emissão" SortExpression="dataemissao" DataFormatString="{0:dd/MM/yyyy}" />  
+                                    <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />                                    
                                     <asp:TemplateField HeaderText="Alterar">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="btn" runat="server" CssClass="glyphicon glyphicon-pencil" CommandName="Alterar"

@@ -123,7 +123,10 @@
   <data name="PedidoSalvoSucesso" xml:space="preserve">
     <value>Pedido salvo com sucesso.</value>
   </data>
+  <data name="QuantidadeMaiorZero" xml:space="preserve">
+    <value>A quantidade deve ser maior que zero.</value>
+  </data>
   <data name="SelecioneProduto" xml:space="preserve">
-    <value />
+    <value>Selecione um produto.</value>
   </data>
 </root>
