@@ -209,6 +209,7 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Bll\ClienteBll.cs" />
     <Compile Include="Bll\PedidoBll.cs" />
     <Compile Include="Bll\ProdutoBll.cs" />
     <Compile Include="Bll\StatusPedido.cs" />

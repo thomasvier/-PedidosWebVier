@@ -30,8 +30,6 @@
                             <div class="form-group col-xs-4">
                                 <label for="ddlCliente">Cliente</label>
                                 <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-control">
-                                    <asp:ListItem Text="Selecione" Value="selecione" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Text="Teste" Value="Teste"></asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>

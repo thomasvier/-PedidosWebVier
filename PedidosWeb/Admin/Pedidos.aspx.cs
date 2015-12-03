@@ -44,8 +44,28 @@ namespace PedidosWeb.Admin
                 gvPedidos.DataBind();
             }
             catch(Exception ex)
-            { 
+            {
+                Msg.Erro(Resource.ContateAdminstrador, this);
+            }
+        }
 
+        public void BindarClientes()
+        {
+            try
+            {
+                ClienteBll ClienteBll = new ClienteBll();
+                List<Cliente> Clientes = ClienteBll.RetornarClientes();
+
+                ddlCliente.DataSource = Clientes;
+                ddlCliente.DataTextField = "NomeFantasia";
+                ddlCliente.DataValueField = "ID";
+                ddlCliente.DataBind();
+                ddlCliente.Items.Insert(0, "Selecione");
+                ddlCliente.Items[0].Value = "0";
+            }
+            catch(Exception ex)
+            {
+                Msg.Erro(Resource.ContateAdminstrador, this);
             }
         }
 
@@ -103,7 +123,19 @@ namespace PedidosWeb.Admin
         {
             if(e.CommandName.Equals("Alterar"))
             {
-                
+                int Linha = int.Parse(e.CommandArgument.ToString());
+                int ID = int.TryParse(gvPedidos.Rows[Linha].Cells[0].Text, out ID) ? ID : 0;
+
+                try
+                {
+                    PedidoBll PedidoBll = new PedidoBll();
+                    Pedido Pedido = PedidoBll.RetornarPedido(ID);
+                }
+                catch(Exception ex)
+                {
+                    Msg.Erro(Resource.ContateAdminstrador, this);
+                }
+
             }
         }
 

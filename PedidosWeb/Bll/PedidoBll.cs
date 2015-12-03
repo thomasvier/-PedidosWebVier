@@ -59,7 +59,7 @@ namespace PedidosWeb.Bll
             return Pedidos;
         }
 
-        public Pedido RetornaPedido(int ID)
+        public Pedido RetornarPedido(int ID)
         {
             Pedido Pedido = (from p in db.Pedido
                              where p.ID.Equals(ID)
