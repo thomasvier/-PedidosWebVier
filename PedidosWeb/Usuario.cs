@@ -12,12 +12,14 @@ namespace PedidosWeb
     using System;
     using System.Collections.Generic;
     
-    public partial class Produto
+    public partial class Usuario
     {
         public int ID { get; set; }
-        public string Descricao { get; set; }
-        public Nullable<decimal> PrecoUnitario { get; set; }
-        public Nullable<decimal> PrecoQuantidade { get; set; }
-        public Nullable<bool> Ativo { get; set; }
+        public string Nome { get; set; }
+        public string Login { get; set; }
+        public string Senha { get; set; }
+        public string Email { get; set; }
+        public Nullable<int> PerfilID { get; set; }
+        public bool Ativo { get; set; }
     }
 }

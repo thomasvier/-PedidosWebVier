@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PedidosWeb.Cliente {
+namespace PedidosWeb.Cli {
     
     
     public partial class Pedidos {

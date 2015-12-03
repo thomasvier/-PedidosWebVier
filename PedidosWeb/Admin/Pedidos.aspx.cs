@@ -103,28 +103,7 @@ namespace PedidosWeb.Admin
         {
             if(e.CommandName.Equals("Alterar"))
             {
-                //DataTable ProdutosTable = new DataTable();
-
-                //ProdutosTable.Columns.Add("ProdutoID");
-                //ProdutosTable.Columns.Add("descricao");
-                //ProdutosTable.Columns.Add("quantidade");
-                //ProdutosTable.Columns.Add("total");
-                //ProdutosTable.Columns.Add("precounitario");
-
-                //ProdutosTable.Rows.Add(1, "Produto 1", 10, 10, 100);
-
-                //gvProdutos.DataSource = ProdutosTable;
-                //gvProdutos.DataBind(
-
-                List<PedidoProduto> PedidoProdutos = new List<PedidoProduto>();
-
-                PedidoProdutos.Add(new PedidoProduto { ProdutoID = 1, Descricao = "Produto 1", Quantidade = 15, Total = 180, PrecoUnitario = 12 });
-                PedidoProdutos.Add(new PedidoProduto { ProdutoID = 2, Descricao = "Produto", Quantidade = 21, Total = 325.5, PrecoUnitario = 15.50 });
-
-                gvProdutos.DataSource = PedidoProdutos.ToDataTable();
-                gvProdutos.DataBind();
-
-                ViewState["Produtos"] = (DataTable)gvProdutos.DataSource;
+                
             }
         }
 

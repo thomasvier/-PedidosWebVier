@@ -8,7 +8,7 @@ using PedidosWeb.Bll;
 using Framework;
 using System.Data;
 
-namespace PedidosWeb.Cliente
+namespace PedidosWeb.Cli
 {
     public partial class Pedidos : System.Web.UI.Page
     {
@@ -61,9 +61,9 @@ namespace PedidosWeb.Cliente
                 ddlProdutos.DataValueField = "ID";
                 ddlProdutos.DataBind();
                 ddlProdutos.Items.Insert(0, "Selecione");
-                ddlProdutos.Items[0].Value = "0";                
+                ddlProdutos.Items[0].Value = "0";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Msg.Erro(Resource.ContateAdminstrador, this);
             }
@@ -77,7 +77,7 @@ namespace PedidosWeb.Cliente
         {
             double Quantidade = double.TryParse(txtQuantidadeProduto.Text, out Quantidade) ? Quantidade : 0;
 
-            if(Quantidade.Equals(0))
+            if (Quantidade.Equals(0))
             {
                 Msg.Info(Resource.QuantidadeMaiorZero, this);
 
@@ -102,7 +102,7 @@ namespace PedidosWeb.Cliente
                     ProdutosTable.Columns.Add("precounitario");
                 }
 
-                int ID = int.Parse(ddlProdutos.SelectedValue);                
+                int ID = int.Parse(ddlProdutos.SelectedValue);
                 double PrecoUnitario = double.TryParse(txtPrecoProduto.Text, out PrecoUnitario) ? PrecoUnitario : 0;
 
                 Produto Produto = ProdutoBll.RetornaProduto(ID);
@@ -201,7 +201,7 @@ namespace PedidosWeb.Cliente
                 ProdutoBll ProdutoBll = new ProdutoBll();
                 int ID = int.Parse(ddlProdutos.SelectedValue);
 
-                if(ID.Equals(0))
+                if (ID.Equals(0))
                 {
                     txtPrecoProduto.Text = "0,00";
                 }
