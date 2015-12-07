@@ -42,12 +42,13 @@ namespace PedidosWeb.Cli
 
                 gvPedidos.DataSource = Pedidos;
                 gvPedidos.DataBind();
+                ViewState["Produtos"] = Pedidos.ToDataTable();
             }
             catch (Exception ex)
             {
                 Msg.Erro(Resource.ContateAdminstrador, this);
             }
-        }
+        }        
 
         private void BindarProdutos()
         {
@@ -138,7 +139,7 @@ namespace PedidosWeb.Cli
 
         protected void btnPesquisar_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         #endregion
@@ -189,7 +190,32 @@ namespace PedidosWeb.Cli
 
         protected void gvPedidos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName.Equals("Alterar"))
+            {
+                int Linha = int.Parse(e.CommandArgument.ToString());
+                int ID = int.TryParse(gvPedidos.Rows[Linha].Cells[0].Text, out ID) ? ID : 0;
 
+                try
+                {
+                    PedidoBll PedidoBll = new PedidoBll();
+                    ProdutoBll ProdutoBll = new ProdutoBll();
+                    Pedido Pedido = PedidoBll.RetornarPedido(ID);
+
+                    hfID.Value = Pedido.ID.ToString();
+                    txtDocumento.Text = Pedido.Documento;
+                    txtDataEntrega.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEntrega);
+
+                    var Produtos = ProdutoBll.RetornarPedidoProdutos(Pedido.ID);
+
+                    gvProdutos.DataSource = Produtos;
+                    gvProdutos.DataBind();
+                    ViewState["Produtos"] = Produtos.ToDataTable();
+                }
+                catch (Exception ex)
+                {
+                    Msg.Erro(Resource.ContateAdminstrador, this);
+                }
+            }
         }
 
         #endregion

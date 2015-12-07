@@ -41,5 +41,31 @@ namespace PedidosWeb.Bll
 
             return Produto;
         }
+
+        public List<ProdutosPedido> RetornarPedidoProdutos(int PedidoID)
+        {
+            var PedidosProduto = (from p in db.Produto
+                                  join pp in db.PedidoProduto on p.ID equals pp.ProdutoID
+                                  where pp.PedidoID.Equals(PedidoID)
+                                  select new ProdutosPedido
+                                  {
+                                      ProdutoID = p.ID,
+                                      Descricao = p.Descricao,
+                                      Quantidade = pp.Quantidade,
+                                      PrecoUnitario = pp.PrecoUnitario,
+                                      Total = pp.Total
+                                  }).ToList();
+
+            return PedidosProduto;
+        }
+
+        public class ProdutosPedido
+        {
+            public int ProdutoID { get; set; }
+            public string Descricao { get; set; }
+            public decimal? Quantidade { get; set; }
+            public decimal? PrecoUnitario { get; set; }
+            public decimal? Total { get; set; }
+        }
     }
 }

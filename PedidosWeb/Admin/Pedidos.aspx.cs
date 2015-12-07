@@ -42,6 +42,7 @@ namespace PedidosWeb.Admin
 
                 gvPedidos.DataSource = Pedidos;
                 gvPedidos.DataBind();
+                ViewState["Produtos"] = Pedidos.ToDataTable();
             }
             catch(Exception ex)
             {
@@ -84,11 +85,57 @@ namespace PedidosWeb.Admin
             }
             catch(Exception ex)
             {
-
+                Msg.Erro(Resource.ContateAdminstrador, this);
             }
         }
 
         #endregion
+        
+        protected void btnProduto_Click(object sender, EventArgs e)
+        {
+            if (!ddlProdutos.SelectedValue.Equals("0"))
+            {
+                ProdutoBll ProdutoBll = new ProdutoBll();
+                DataTable ProdutosTable = new DataTable();
+
+                if (ViewState["Produtos"] != null)
+                {
+                    ProdutosTable = (DataTable)ViewState["Produtos"];
+                }
+                else
+                {
+                    ProdutosTable.Columns.Add("ID");
+                    ProdutosTable.Columns.Add("produtoID");
+                    ProdutosTable.Columns.Add("descricao");
+                    ProdutosTable.Columns.Add("quantidade");
+                    ProdutosTable.Columns.Add("total");
+                    ProdutosTable.Columns.Add("precounitario");
+                }
+
+                int ID = int.Parse(ddlProdutos.SelectedValue);
+                double Quantidade = double.TryParse(txtQuantidadeProduto.Text, out Quantidade) ? Quantidade : 0;
+                double PrecoUnitario = double.TryParse(txtPrecoProduto.Text, out PrecoUnitario) ? PrecoUnitario : 0;
+
+                Produto Produto = ProdutoBll.RetornaProduto(ID);
+
+                double Total = Quantidade * PrecoUnitario;
+
+                ProdutosTable.NewRow();
+
+                ProdutosTable.Rows.Add(0, Produto.ID, Produto.Descricao, string.Format("{0:N3}", Quantidade), string.Format("{0:N}", Total), PrecoUnitario);
+
+                ViewState["Produtos"] = ProdutosTable;
+
+                gvProdutos.DataSource = ProdutosTable;
+                gvProdutos.DataBind();
+
+                LimparFormularioProduto();
+            }
+            else
+            {
+                Msg.Info("Selecione um produto", this);
+            }
+        }
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -98,7 +145,7 @@ namespace PedidosWeb.Admin
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void btnPesquisar_Click(object sender, EventArgs e)
@@ -129,13 +176,24 @@ namespace PedidosWeb.Admin
                 try
                 {
                     PedidoBll PedidoBll = new PedidoBll();
+                    ProdutoBll ProdutoBll = new ProdutoBll();
                     Pedido Pedido = PedidoBll.RetornarPedido(ID);
+
+                    txtID.Text = string.Format("{0:000000}", Pedido.ID);
+                    txtDocumento.Text = Pedido.Documento;
+                    txtDataEmissao.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEmissao);
+                    txtDataEntrega.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEntrega);
+
+                    var Produtos = ProdutoBll.RetornarPedidoProdutos(Pedido.ID);
+
+                    gvProdutos.DataSource = Produtos;
+                    gvProdutos.DataBind();
+                    ViewState["Produtos"] = Produtos.ToDataTable();
                 }
                 catch(Exception ex)
                 {
                     Msg.Erro(Resource.ContateAdminstrador, this);
                 }
-
             }
         }
 
@@ -157,53 +215,7 @@ namespace PedidosWeb.Admin
             }
             catch(Exception ex)
             {
-
-            }
-        }
-
-        protected void btnProduto_Click(object sender, EventArgs e)
-        {
-            if (!ddlProdutos.SelectedValue.Equals("0"))
-            {
-                ProdutoBll ProdutoBll = new ProdutoBll();
-                DataTable ProdutosTable = new DataTable();              
-  
-                if(ViewState["Produtos"] != null)
-                {
-                    ProdutosTable = (DataTable)ViewState["Produtos"];
-                }
-                else
-                {
-                    ProdutosTable.Columns.Add("ID");
-                    ProdutosTable.Columns.Add("produtoID");
-                    ProdutosTable.Columns.Add("descricao");
-                    ProdutosTable.Columns.Add("quantidade");
-                    ProdutosTable.Columns.Add("total");
-                    ProdutosTable.Columns.Add("precounitario");
-                }
-
-                int ID = int.Parse(ddlProdutos.SelectedValue);
-                double Quantidade = double.TryParse(txtQuantidadeProduto.Text, out Quantidade) ? Quantidade : 0;
-                double PrecoUnitario = double.TryParse(txtPrecoProduto.Text, out PrecoUnitario) ? PrecoUnitario : 0;
-                
-                Produto Produto = ProdutoBll.RetornaProduto(ID);
-
-                double Total = Quantidade * PrecoUnitario;
-
-                ProdutosTable.NewRow();
-
-                ProdutosTable.Rows.Add(0, Produto.ID, Produto.Descricao, string.Format("{0:N3}", Quantidade), string.Format("{0:N}", Total), PrecoUnitario);
-
-                ViewState["Produtos"] = ProdutosTable;
-
-                gvProdutos.DataSource = ProdutosTable;
-                gvProdutos.DataBind();
-
-                LimparFormularioProduto();
-            }
-            else
-            {
-                Msg.Info("Selecione um produto", this);
+                Msg.Erro(Resource.ContateAdminstrador, this);
             }
         }
 

@@ -114,8 +114,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Admin\Clientes.aspx" />
     <Content Include="Admin\Pedidos.aspx" />
     <Content Include="Admin\Pedidos.js" />
+    <Content Include="Admin\Produtos.aspx" />
+    <Content Include="Admin\Usuarios.aspx" />
     <Content Include="Cli\Pedidos.aspx" />
     <Content Include="Cli\Pedidos.js" />
     <Content Include="Contact.aspx" />
@@ -193,12 +196,33 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\Clientes.aspx.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Clientes.aspx.designer.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Pedidos.aspx.cs">
       <DependentUpon>Pedidos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Pedidos.aspx.designer.cs">
       <DependentUpon>Pedidos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Produtos.aspx.cs">
+      <DependentUpon>Produtos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Produtos.aspx.designer.cs">
+      <DependentUpon>Produtos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -213,6 +237,8 @@
     <Compile Include="Bll\PedidoBll.cs" />
     <Compile Include="Bll\ProdutoBll.cs" />
     <Compile Include="Bll\StatusPedido.cs" />
+    <Compile Include="Bll\TipoOperacao.cs" />
+    <Compile Include="Bll\UsuarioBll.cs" />
     <Compile Include="Cliente.cs">
       <DependentUpon>PedidosData.tt</DependentUpon>
     </Compile>
