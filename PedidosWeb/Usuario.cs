@@ -21,5 +21,6 @@ namespace PedidosWeb
         public string Email { get; set; }
         public Nullable<int> PerfilID { get; set; }
         public bool Ativo { get; set; }
+        public int Tipo { get; set; }
     }
 }

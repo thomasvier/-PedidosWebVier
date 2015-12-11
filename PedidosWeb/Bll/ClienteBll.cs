@@ -40,7 +40,7 @@ namespace PedidosWeb.Bll
         /// <param name="gvSortEventArgs"></param>
         /// <param name="filtro"></param>
         /// <returns></returns>
-        public List<Cliente> BuscaClientes(GridViewSortEventArgs gvSortEventArgs, string filtro)
+        public List<Cliente> BuscaClientes(string filtro)
         {
             var Clientes = (from cf in db.Cliente
                             select cf);

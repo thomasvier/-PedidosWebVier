@@ -40,7 +40,7 @@ namespace PedidosWeb.Bll
         /// <param name="gvSortEventArgs"></param>
         /// <param name="filtro"></param>
         /// <returns></returns>
-        public List<Usuario> BuscarUsuarios(GridViewSortEventArgs gvSortEventArgs, string[] filtro)
+        public List<Usuario> BuscarUsuarios(string[] filtro)
         {
             int ID = 0;
             string descricao = filtro[0];

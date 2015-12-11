@@ -120,6 +120,15 @@
   <data name="ContateAdminstrador" xml:space="preserve">
     <value>Ocorreu um erro ao processar a operação. Entre em contato com o administrador do sistema.</value>
   </data>
+  <data name="ItemExcluidoSucesso" xml:space="preserve">
+    <value>Item excluído com sucesso.</value>
+  </data>
+  <data name="ItemSalvoSucesso" xml:space="preserve">
+    <value>Item salvo com sucesso.</value>
+  </data>
+  <data name="ItemSelecioneExclusao" xml:space="preserve">
+    <value>Selecione um item para fazer a exclusão.</value>
+  </data>
   <data name="PedidoSalvoSucesso" xml:space="preserve">
     <value>Pedido salvo com sucesso.</value>
   </data>
@@ -128,5 +137,8 @@
   </data>
   <data name="SelecioneProduto" xml:space="preserve">
     <value>Selecione um produto.</value>
+  </data>
+  <data name="UsuarioExistente" xml:space="preserve">
+    <value>Já existe um usuário cadastrado com o login {0}</value>
   </data>
 </root>

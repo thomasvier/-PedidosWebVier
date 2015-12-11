@@ -82,7 +82,7 @@
                                     <div class="form-group">
                                         <asp:TextBox ID="txtFiltro" runat="server" CausesValidation="false" CssClass="form-control" placeholder="Pesquisar"></asp:TextBox>
                                     </div>
-                                    <asp:Button ID="btnPesquisar" runat="server" Text="Enviar" ClientIDMode="Static" CssClass="btn btn-default" />
+                                    <asp:Button ID="btnPesquisar" runat="server" Text="Enviar" ClientIDMode="Static" OnClick="btnPesquisar_Click" CssClass="btn btn-default" />
                                 </div>
                             </div>
                         </nav>

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using PedidosWeb.Bll;
 using Framework;
 
-namespace PedidosWeb.Admin
+namespace PedidosWeb.Rep
 {
     public partial class Pedidos : System.Web.UI.Page
     {
@@ -37,14 +37,18 @@ namespace PedidosWeb.Admin
         {
             try
             {
+                DateTime DataInicial = DateTime.TryParse(txtDataInicialFiltro.Text, out DataInicial) ? DataInicial : DateTime.MinValue;
+                DateTime DataFinal = DateTime.TryParse(txtDataFinalFiltro.Text, out DataFinal) ? DataFinal : DateTime.MinValue;
+                StatusPedido StatusPedido = (StatusPedido)int.Parse(ddlCliente.SelectedValue);
+
                 PedidoBll PedidoBll = new PedidoBll();
-                List<Pedido> Pedidos = PedidoBll.RetornaTodosPedidos();
+                IList<Pedido> Pedidos = PedidoBll.BuscarPedidosUsuario(this.User.Identity.Name, txtDocumentoFiltro.Text, DataInicial, DataFinal, StatusPedido);
 
                 gvPedidos.DataSource = Pedidos;
                 gvPedidos.DataBind();
                 ViewState["Produtos"] = Pedidos.ToDataTable();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Msg.Erro(Resource.ContateAdminstrador, this);
             }
@@ -64,7 +68,7 @@ namespace PedidosWeb.Admin
                 ddlCliente.Items.Insert(0, "Selecione");
                 ddlCliente.Items[0].Value = "0";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Msg.Erro(Resource.ContateAdminstrador, this);
             }
@@ -83,14 +87,128 @@ namespace PedidosWeb.Admin
                 ddlProdutos.Items.Insert(0, "Selecione");
                 ddlProdutos.Items[0].Value = "0";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Msg.Erro(Resource.ContateAdminstrador, this);
             }
         }
 
         #endregion
-        
+
+        #region grid
+
+        protected void gvPedidos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvPedidos.PageIndex = e.NewPageIndex;
+            BindarGrid();
+        }
+
+        protected void gvPedidos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("Alterar"))
+            {
+                int Linha = int.Parse(e.CommandArgument.ToString());
+                int ID = int.TryParse(gvPedidos.Rows[Linha].Cells[0].Text, out ID) ? ID : 0;
+
+                try
+                {
+                    PedidoBll PedidoBll = new PedidoBll();
+                    ProdutoBll ProdutoBll = new ProdutoBll();
+                    Pedido Pedido = PedidoBll.RetornarPedido(ID);
+
+                    txtID.Text = string.Format("{0:000000}", Pedido.ID);
+                    txtDocumento.Text = Pedido.Documento;
+                    txtDataEmissao.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEmissao);
+                    txtDataEntrega.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEntrega);
+
+                    var Produtos = ProdutoBll.RetornarPedidoProdutos(Pedido.ID);
+
+                    gvProdutos.DataSource = Produtos;
+                    gvProdutos.DataBind();
+                    ViewState["Produtos"] = Produtos.ToDataTable();
+                }
+                catch (Exception ex)
+                {
+                    Msg.Erro(Resource.ContateAdminstrador, this);
+                }
+            }
+        }
+
+        protected void gvProdutos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("Alterar"))
+            {
+                int Linha = int.Parse(e.CommandArgument.ToString());
+
+                DataTable dtProdutos = (DataTable)ViewState["Produtos"];
+
+                double Quantidade = double.TryParse(dtProdutos.Rows[Linha][3].ToString(), out Quantidade) ? Quantidade : 0;
+                double PrecoProduto = double.TryParse(dtProdutos.Rows[Linha][5].ToString(), out PrecoProduto) ? PrecoProduto : 0;
+
+                ddlProdutos.SelectedValue = dtProdutos.Rows[Linha][1].ToString();
+                txtQuantidadeProduto.Text = string.Format("{0:N3}", Quantidade);
+                txtPrecoProduto.Text = string.Format("{0:N}", PrecoProduto);
+
+                dtProdutos.Rows.RemoveAt(Linha);
+
+                ViewState["Produtos"] = dtProdutos;
+                gvProdutos.DataSource = dtProdutos;
+                gvProdutos.DataBind();
+            }
+            else if (e.CommandName.Equals("Remover"))
+            {
+                int Linha = int.Parse(e.CommandArgument.ToString());
+
+                DataTable dtProdutos = (DataTable)ViewState["Produtos"];
+
+                dtProdutos.Rows.RemoveAt(Linha);
+
+                ViewState["Produtos"] = dtProdutos;
+
+                gvProdutos.DataSource = dtProdutos;
+                gvProdutos.DataBind();
+            }
+        }
+
+        #endregion
+
+        #region buttons
+
+        protected void btnPesquisar_Click(object sender, EventArgs e)
+        {
+            BindarGrid();
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSalvar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlProdutos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ProdutoBll ProdutoBll = new ProdutoBll();
+                int ID = int.Parse(ddlProdutos.SelectedValue);
+
+                if (!ID.Equals(0))
+                {
+                    Produto Produto = ProdutoBll.RetornaProduto(ID);
+
+                    txtPrecoProduto.Text = string.Format("{0:N}", Produto.PrecoUnitario);
+                }
+            }
+            catch (Exception ex)
+            {
+                Msg.Erro(Resource.ContateAdminstrador, this);
+            }
+        }
+
         protected void btnProduto_Click(object sender, EventArgs e)
         {
             if (!ddlProdutos.SelectedValue.Equals("0"))
@@ -137,122 +255,6 @@ namespace PedidosWeb.Admin
             }
         }
 
-        protected void btnSalvar_Click(object sender, EventArgs e)
-        {
-            if (gvProdutos.Rows.Count < 1)
-                Msg.Info(Resource.SelecioneProduto, this);
-        }
-
-        protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        protected void btnPesquisar_Click(object sender, EventArgs e)
-        {
-            BindarGrid();
-        }
-
-        #region grid
-
-        protected void gvPedidos_Sorting(object sender, GridViewSortEventArgs e)
-        {
-
-        }
-
-        protected void gvPedidos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvPedidos.PageIndex = e.NewPageIndex;
-            BindarGrid();
-        }
-
-        protected void gvPedidos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if(e.CommandName.Equals("Alterar"))
-            {
-                int Linha = int.Parse(e.CommandArgument.ToString());
-                int ID = int.TryParse(gvPedidos.Rows[Linha].Cells[0].Text, out ID) ? ID : 0;
-
-                try
-                {
-                    PedidoBll PedidoBll = new PedidoBll();
-                    ProdutoBll ProdutoBll = new ProdutoBll();
-                    Pedido Pedido = PedidoBll.RetornarPedido(ID);
-
-                    txtID.Text = string.Format("{0:000000}", Pedido.ID);
-                    txtDocumento.Text = Pedido.Documento;
-                    txtDataEmissao.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEmissao);
-                    txtDataEntrega.Text = string.Format("{0:dd/MM/yyyy}", Pedido.DataEntrega);
-
-                    var Produtos = ProdutoBll.RetornarPedidoProdutos(Pedido.ID);
-
-                    gvProdutos.DataSource = Produtos;
-                    gvProdutos.DataBind();
-                    ViewState["Produtos"] = Produtos.ToDataTable();
-                }
-                catch(Exception ex)
-                {
-                    Msg.Erro(Resource.ContateAdminstrador, this);
-                }
-            }
-        }
-
         #endregion
-
-        protected void ddlProdutos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {                
-                ProdutoBll ProdutoBll = new ProdutoBll();
-                int ID = int.Parse(ddlProdutos.SelectedValue);
-
-                if (!ID.Equals(0))
-                {
-                    Produto Produto = ProdutoBll.RetornaProduto(ID);
-
-                    txtPrecoProduto.Text = string.Format("{0:N}", Produto.PrecoUnitario);
-                }
-            }
-            catch(Exception ex)
-            {
-                Msg.Erro(Resource.ContateAdminstrador, this);
-            }
-        }
-
-        protected void gvProdutos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName.Equals("Alterar"))
-            {
-                int Linha = int.Parse(e.CommandArgument.ToString());
-
-                DataTable dtProdutos = (DataTable)ViewState["Produtos"];
-
-                double Quantidade = double.TryParse(dtProdutos.Rows[Linha][3].ToString(), out Quantidade) ? Quantidade : 0;
-                double PrecoProduto = double.TryParse(dtProdutos.Rows[Linha][5].ToString(), out PrecoProduto) ? PrecoProduto : 0;
-
-                ddlProdutos.SelectedValue = dtProdutos.Rows[Linha][1].ToString();
-                txtQuantidadeProduto.Text = string.Format("{0:N3}", Quantidade);
-                txtPrecoProduto.Text = string.Format("{0:N}", PrecoProduto);
-
-                dtProdutos.Rows.RemoveAt(Linha);
-
-                ViewState["Produtos"] = dtProdutos;
-                gvProdutos.DataSource = dtProdutos;
-                gvProdutos.DataBind();
-            }
-            else if(e.CommandName.Equals("Remover"))
-            {
-                int Linha = int.Parse(e.CommandArgument.ToString());
-
-                DataTable dtProdutos = (DataTable)ViewState["Produtos"];
-
-                dtProdutos.Rows.RemoveAt(Linha);
-
-                ViewState["Produtos"] = dtProdutos;
-
-                gvProdutos.DataSource = dtProdutos;
-                gvProdutos.DataBind();
-            }
-        }
     }
 }

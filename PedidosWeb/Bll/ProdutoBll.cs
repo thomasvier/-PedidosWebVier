@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace PedidosWeb.Bll
 {
@@ -14,8 +15,10 @@ namespace PedidosWeb.Bll
             db = new Contexto();
         }
 
-        public int RetornaNovoID()
+        public static int RetornaNovoID()
         {
+            Contexto db = new Contexto();
+
             int ID = (from p in db.Produto
                       orderby p.ID descending
                       select p.ID).FirstOrDefault();
@@ -42,6 +45,17 @@ namespace PedidosWeb.Bll
             return Produto;
         }
 
+        public List<Produto> BuscarProdutos(string Filto)
+        {
+            var Produtos = (from cf in db.Produto
+                            select cf);
+
+            if (!string.IsNullOrEmpty(Filto))
+                Produtos = Produtos.Where(x => x.Descricao.Contains(Filto));
+
+            return Produtos.ToList();
+        }
+
         public List<ProdutosPedido> RetornarPedidoProdutos(int PedidoID)
         {
             var PedidosProduto = (from p in db.Produto
@@ -57,6 +71,39 @@ namespace PedidosWeb.Bll
                                   }).ToList();
 
             return PedidosProduto;
+        }
+
+        /// <summary>
+        /// Insere um novo produto
+        /// </summary>
+        /// <param name="Produto"></param>
+        public void InserirProduto(Produto Produto)
+        {
+            Produto.ID = RetornaNovoID();
+
+            db.Produto.Add(Produto);
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Método que altera uma produto existente
+        /// </summary>
+        /// <param name="Produto"></param>
+        public void AlterarProduto(Produto Produto)
+        {
+            db.Produto.Attach(Produto);
+            db.Entry(Produto).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Método que remove uma produto
+        /// </summary>
+        /// <param name="empresa"></param>
+        public void RemoverProduto(Produto Produto)
+        {
+            db.Produto.Remove(Produto);
+            db.SaveChanges();
         }
 
         public class ProdutosPedido

@@ -25,7 +25,7 @@ namespace PedidosWeb.Bll
             return ID;
         }
 
-        public IList<Pedido> BuscarPedidos(int ClienteID, DateTime Data, StatusPedido Status)
+        public IList<Pedido> BuscarPedidos(int ClienteID, DateTime DataInicial, DateTime DataFinal, StatusPedido Status)
         {
             List<Pedido> Pedidos = (from p in db.Pedido                                   
                                     select p).ToList();
@@ -33,8 +33,32 @@ namespace PedidosWeb.Bll
             if (ClienteID > 0)
                 Pedidos = Pedidos.Where(x => x.ClienteID.Equals(ClienteID)).ToList();
 
-            if (Data != DateTime.MinValue)
-                Pedidos = Pedidos.Where(x => x.DataEmissao.Value.Date >= Data && x.DataEmissao.Value.Date <= Data).ToList();
+            if (DataInicial != DateTime.MinValue)
+                Pedidos = Pedidos.Where(x => x.DataEmissao.Value.Date >= DataInicial).ToList();
+
+            if (DataFinal != DateTime.MinValue)
+                Pedidos = Pedidos.Where(x => x.DataEmissao.Value.Date <= DataFinal).ToList();
+
+            if (Status != StatusPedido.Todos)
+                Pedidos = Pedidos.Where(x => x.Status.Equals(Status.GetHashCode())).ToList();
+
+            return Pedidos;
+        }
+
+        public IList<Pedido> BuscarPedidosUsuario(string Login, string Documento, DateTime DataInicial, DateTime DataFinal, StatusPedido Status)
+        {
+            List<Pedido> Pedidos = (from p in db.Pedido
+                                    where p.Login.Equals(Login)
+                                    select p).ToList();
+
+            if (Documento != string.Empty)
+                Pedidos = Pedidos.Where(x => x.Documento.Equals(Documento)).ToList();
+
+            if (DataInicial != DateTime.MinValue)
+                Pedidos = Pedidos.Where(x => x.DataEmissao.Value.Date >= DataInicial).ToList();
+
+            if(DataFinal != DateTime.MinValue)
+                Pedidos = Pedidos.Where(x => x.DataEmissao.Value.Date <= DataFinal).ToList();
 
             if (Status != StatusPedido.Todos)
                 Pedidos = Pedidos.Where(x => x.Status.Equals(Status.GetHashCode())).ToList();

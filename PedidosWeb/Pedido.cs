@@ -20,5 +20,6 @@ namespace PedidosWeb
         public Nullable<System.DateTime> DataEmissao { get; set; }
         public Nullable<System.DateTime> DataEntrega { get; set; }
         public Nullable<int> Status { get; set; }
+        public string Login { get; set; }
     }
 }
